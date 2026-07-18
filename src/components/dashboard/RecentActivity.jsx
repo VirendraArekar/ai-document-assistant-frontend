@@ -3,20 +3,22 @@ const activities = [
 
   "Asked AI about Spring Boot",
 
-  "Generated Interview Questions",
+  "Downloaded Kubernetes Guide",
 
-  "Uploaded Docker Guide.pdf",
+  "Updated profile",
+
+  "Created new chat",
 ];
 
 function RecentActivity() {
   return (
-    <div className="rounded-2xl bg-slate-900 p-6 border border-slate-800">
-      <h2 className="text-xl font-bold mb-6">Recent Activity</h2>
+    <div className="bg-slate-900 rounded-2xl p-6 border border-slate-800">
+      <h2 className="text-xl font-bold mb-5">Recent Activity</h2>
 
       <div className="space-y-4">
-        {activities.map((item, index) => (
-          <div key={index} className="border-b border-slate-800 pb-3">
-            {item}
+        {activities.map((activity, index) => (
+          <div key={index} className="bg-slate-800 rounded-xl px-4 py-3">
+            {activity}
           </div>
         ))}
       </div>

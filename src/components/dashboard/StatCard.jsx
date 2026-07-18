@@ -1,25 +1,23 @@
-import { motion } from "framer-motion";
-
-function StatCard({ title, value, icon, color }) {
+function StatCard({
+  title,
+  value,
+  icon: Icon,
+  color = "bg-blue-600",
+}) {
   return (
-    <motion.div
-      whileHover={{ scale: 1.03 }}
-      className="rounded-2xl bg-slate-900 border border-slate-800 p-6 shadow-lg"
-    >
+    <div className="bg-slate-900 rounded-2xl p-6 border border-slate-800">
       <div className="flex justify-between items-center">
         <div>
-          <p className="text-slate-400 text-sm">{title}</p>
+          <p className="text-slate-400">{title}</p>
 
-          <h2 className="text-4xl font-bold mt-4">{value}</h2>
+          <h2 className="text-3xl font-bold mt-2">{value}</h2>
         </div>
 
-        <div
-          className={`h-16 w-16 rounded-2xl flex items-center justify-center ${color}`}
-        >
-          {icon}
+        <div className={`${color} p-4 rounded-xl`}>
+          <Icon size={26} />
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

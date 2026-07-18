@@ -2,7 +2,10 @@ import {
   LayoutDashboard,
   MessageSquare,
   FileText,
+  UserCircle,
+  BrainCircuit,
   BarChart3,
+  BrainCog,
   Settings,
   LogOut,
 } from "lucide-react";
@@ -38,6 +41,24 @@ const menus = [
     name: "Settings",
     path: "/settings",
     icon: Settings,
+  },
+
+  {
+    title: "AI Workspace",
+    path: "/workspace",
+    icon: BrainCircuit,
+  },
+
+  {
+    title: "AI Intelligence",
+    path: "/intelligence",
+    icon: BrainCog,
+  },
+
+  {
+    name: "Profile",
+    path: "/profile",
+    icon: UserCircle,
   },
 ];
 

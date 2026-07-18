@@ -1,67 +1,47 @@
 import DashboardLayout from "../layouts/DashboardLayout";
-import { FileText, MessageSquare, Brain, Database } from "lucide-react";
-
+import DashboardHeader from "../components/dashboard/DashboardHeader";
 import StatCard from "../components/dashboard/StatCard";
-import { useEffect, useState } from "react";
-import { getDashboard } from "../api/dashboardService";
+import UsageChart from "../components/dashboard/UsageChart";
+import RecentActivity from "../components/dashboard/RecentActivity";
+
+import { FileText, MessageSquare, Brain, Users } from "lucide-react";
 
 function Dashboard() {
-  const [stats, setStats] = useState({
-    totalDocuments: 0,
-
-    totalChats: 0,
-
-    totalQuestions: 0,
-
-    storageUsed: "0 MB",
-  });
-
-  useEffect(() => {
-    loadDashboard();
-  }, []);
-
-  const loadDashboard = async () => {
-    try {
-      const data = await getDashboard();
-
-      setStats(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   return (
     <DashboardLayout>
-      <h1 className="text-4xl font-bold mb-8">Dashboard</h1>
+      <DashboardHeader />
 
-      <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
         <StatCard
           title="Documents"
-          value={stats.totalDocuments}
+          value="24"
+          icon={FileText}
           color="bg-blue-600"
-          icon={<FileText />}
-        />
-
-        <StatCard
-          title="Chats"
-          value={stats.totalChats}
-          color="bg-green-600"
-          icon={<MessageSquare />}
         />
 
         <StatCard
           title="Questions"
-          value={stats.totalQuestions}
-          color="bg-purple-600"
-          icon={<Brain />}
+          value="512"
+          icon={MessageSquare}
+          color="bg-green-600"
         />
 
         <StatCard
-          title="Storage"
-          value={stats.storageUsed}
-          color="bg-orange-600"
-          icon={<Database />}
+          title="AI Tokens"
+          value="52K"
+          icon={Brain}
+          color="bg-purple-600"
         />
+
+        <StatCard title="Users" value="5" icon={Users} color="bg-orange-600" />
+      </div>
+
+      <div className="grid lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <UsageChart />
+        </div>
+
+        <RecentActivity />
       </div>
     </DashboardLayout>
   );
