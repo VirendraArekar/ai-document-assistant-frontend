@@ -1,30 +1,16 @@
 import DashboardLayout from "../layouts/DashboardLayout";
-import DocumentCard from "../components/DocumentCard";
+import UploadCard from "../components/UploadCard";
+import DocumentList from "../components/DocumentList";
 
 function Documents() {
-    const docs = [
-        "Resume.pdf",
-        "SpringBoot.pdf",
-        "ReactGuide.pdf"
-    ]
-
     return (
         <DashboardLayout>
-            <h1 className="text-3xl font-bold mb-6">
-                Uploaded Documents
-            </h1>
-            <div className="space-y-4">
-                {
-                    docs.map(doc =>
-                        <DocumentCard
-                            key={doc}
-                            name={doc}
-                        />
-                    )
-                }
+            <div className="grid lg:grid-cols-2 gap-8">
+                <UploadCard />
+                <DocumentList />
             </div>
         </DashboardLayout>
-    )
+    );
 }
 
 export default Documents;
