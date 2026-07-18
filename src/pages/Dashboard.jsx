@@ -1,33 +1,70 @@
 import DashboardLayout from "../layouts/DashboardLayout";
-import StatCard from "../components/StatCard";
-import QuickActions from "../components/QuickActions";
-import RecentDocuments from "../components/RecentDocuments";
+import { FileText, MessageSquare, Brain, Database } from "lucide-react";
+
+import StatCard from "../components/dashboard/StatCard";
+import { useEffect, useState } from "react";
+import { getDashboard } from "../api/dashboardService";
 
 function Dashboard() {
-    return (
-        <DashboardLayout>
-            <div className="grid lg:grid-cols-3 gap-6">
-                <StatCard
-                    title="Documents"
-                    value="15"
-                />
-                <StatCard
-                    title="Questions"
-                    value="247"
-                />
+  const [stats, setStats] = useState({
+    totalDocuments: 0,
 
-                <StatCard
-                    title="Responses"
-                    value="247"
-                />
-            </div>
+    totalChats: 0,
 
-            <div className="grid lg:grid-cols-2 gap-6 mt-8">
-                <QuickActions />
-                <RecentDocuments />
-            </div>
-        </DashboardLayout>
-    )
+    totalQuestions: 0,
+
+    storageUsed: "0 MB",
+  });
+
+  useEffect(() => {
+    loadDashboard();
+  }, []);
+
+  const loadDashboard = async () => {
+    try {
+      const data = await getDashboard();
+
+      setStats(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  return (
+    <DashboardLayout>
+      <h1 className="text-4xl font-bold mb-8">Dashboard</h1>
+
+      <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <StatCard
+          title="Documents"
+          value={stats.totalDocuments}
+          color="bg-blue-600"
+          icon={<FileText />}
+        />
+
+        <StatCard
+          title="Chats"
+          value={stats.totalChats}
+          color="bg-green-600"
+          icon={<MessageSquare />}
+        />
+
+        <StatCard
+          title="Questions"
+          value={stats.totalQuestions}
+          color="bg-purple-600"
+          icon={<Brain />}
+        />
+
+        <StatCard
+          title="Storage"
+          value={stats.storageUsed}
+          color="bg-orange-600"
+          icon={<Database />}
+        />
+      </div>
+    </DashboardLayout>
+  );
 }
 
 export default Dashboard;

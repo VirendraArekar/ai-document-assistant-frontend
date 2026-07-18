@@ -1,74 +1,85 @@
 import {
-    FaHome,
-    FaComments,
-    FaFileAlt,
-    FaUserCircle,
-    FaSignOutAlt
-} from "react-icons/fa";
+  LayoutDashboard,
+  MessageSquare,
+  FileText,
+  BarChart3,
+  Settings,
+  LogOut,
+} from "lucide-react";
 
 import { NavLink } from "react-router-dom";
 
-const menu = [
-    {
-        title: "Dashboard",
-        icon: <FaHome />,
-        path: "/dashboard"
-    },
-    {
-        title: "AI Chat",
-        icon: <FaComments />,
-        path: "/chat"
-    },
-    {
-        title: "Documents",
-        icon: <FaFileAlt />,
-        path: "/documents"
-    },
-    {
-        title: "Profile",
-        icon: <FaUserCircle />,
-        path: "/profile"
-    }
+const menus = [
+  {
+    name: "Dashboard",
+    path: "/dashboard",
+    icon: LayoutDashboard,
+  },
+
+  {
+    name: "AI Chat",
+    path: "/chat",
+    icon: MessageSquare,
+  },
+
+  {
+    name: "Documents",
+    path: "/documents",
+    icon: FileText,
+  },
+
+  {
+    name: "Analytics",
+    path: "/analytics",
+    icon: BarChart3,
+  },
+
+  {
+    name: "Settings",
+    path: "/settings",
+    icon: Settings,
+  },
 ];
 
 function Sidebar() {
+  return (
+    <aside className="w-72 bg-slate-900 border-r border-slate-800 flex flex-col">
+      <div className="p-8">
+        <h1 className="text-3xl font-bold">🤖 AI Docs</h1>
 
-    return (
-        <div className="w-64 h-screen bg-gray-950 border-r border-gray-800 flex flex-col">
-            <div className="p-6">
-                <h1 className="text-3xl font-bold text-blue-500">
-                    🤖 AI Assistant
-                </h1>
-                <p className="text-gray-500 text-sm">
-                    Powered by Spring Boot
-                </p>
-            </div>
-            <div className="flex-1">
-                {
-                    menu.map((item) => (
-                        <NavLink
-                            key={item.title}
-                            to={item.path}
-                            className={({ isActive }) =>
-                                `flex items-center gap-3 p-4 mx-3 rounded-lg mb-2 transition
-                                ${isActive
-                                    ? "bg-blue-600"
-                                    : "hover:bg-gray-800"}`
-                            }
-                        >
-                            {item.icon}
-                            {item.title}
-                        </NavLink>
-                    ))
-                }
-            </div>
-            <button className="m-4 bg-red-600 rounded-lg p-3 flex justify-center items-center gap-3">
-                <FaSignOutAlt />
-                Logout
-            </button>
-        </div>
-    )
+        <p className="text-slate-400 mt-2">Spring Boot + LangChain</p>
+      </div>
 
+      <nav className="flex-1 px-4">
+        {menus.map((item) => {
+          const Icon = item.icon;
+
+          return (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) =>
+                `flex items-center gap-4 rounded-xl px-5 py-4 mb-2 transition ${
+                  isActive ? "bg-blue-600 text-white" : "hover:bg-slate-800"
+                }`
+              }
+            >
+              <Icon size={20} />
+
+              {item.name}
+            </NavLink>
+          );
+        })}
+      </nav>
+
+      <div className="p-4">
+        <button className="flex w-full items-center gap-3 rounded-xl bg-red-600 px-5 py-4 hover:bg-red-700">
+          <LogOut />
+          Logout
+        </button>
+      </div>
+    </aside>
+  );
 }
 
 export default Sidebar;

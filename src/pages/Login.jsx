@@ -2,107 +2,107 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { FaRobot } from "react-icons/fa";
-import InputField from "../components/InputField";
-import toast from "react-hot-toast";
-import { loginUser } from "../api/authService";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
+
+import InputField from "../components/InputField";
+import { loginUser } from "../api/authService";
 import { loginSuccess } from "../redux/authSlice";
 
 function Login() {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-    const login = async (data) => {
-        try {
-            const response = await loginUser(data);
-            dispatch(loginSuccess(response));
-            toast.success("Login Successful");
-            navigate("/dashboard");
-        } catch (error) {
-            toast.error(
-                error.response?.data?.message || "Login Failed"
-            );
-        }
-    };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-    return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-950 via-blue-950 to-black flex justify-center items-center">
-            <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: .5 }}
-                className="
-                bg-gray-900/80
-                backdrop-blur-xl
-                w-[420px]
-                p-10
-                rounded-3xl
-                shadow-2xl
-                border
-                border-gray-700
-                "
-            >
+  const login = async (data) => {
+    try {
+      setLoading(true);
 
-                <div className="flex justify-center mb-5">
-                    <FaRobot
-                        size={60}
-                        className="text-blue-500"
-                    />
-                </div>
-                <h1 className="text-4xl font-bold text-center">
-                    AI Assistant
-                </h1>
-                <p className="text-center text-gray-400 mt-2 mb-8">
-                    Login to continue
-                </p>
-                <form onSubmit={handleSubmit(login)}>
-                    <InputField
-                        type="email"
-                        placeholder="Email"
-                        register={register}
-                        name="email"
-                        error={errors.email}
-                    />
+      const response = await loginUser(data);
 
-                    <InputField
-                        type="password"
-                        placeholder="Password"
-                        register={register}
-                        name="password"
-                        error={errors.password}
-                    />
+      dispatch(loginSuccess(response));
 
-                    <button
-                        className="
-                        w-full
-                        bg-blue-600
-                        hover:bg-blue-700
-                        rounded-xl
-                        p-4
-                        font-bold
-                        transition
-                        "
-                    >
-                        Login
-                    </button>
-                </form>
-                <div className="mt-8 text-center">
-                    <Link
-                        to="/register"
-                        className="text-blue-400"
-                    >
-                        Create Account
-                    </Link>
-                </div>
-            </motion.div>
+      toast.success("Welcome Back!");
+
+      navigate("/dashboard");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Invalid Email or Password");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-black flex items-center justify-center px-4">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-md rounded-3xl border border-slate-700 bg-slate-900/70 backdrop-blur-xl shadow-2xl p-10"
+      >
+        <div className="flex justify-center">
+          <div className="bg-blue-600 p-5 rounded-full shadow-lg">
+            <FaRobot className="text-5xl text-white" />
+          </div>
         </div>
-    )
+
+        <h1 className="text-center text-5xl font-bold mt-6">AI Assistant</h1>
+
+        <p className="text-center text-slate-400 mt-3 mb-8">
+          Login to continue
+        </p>
+
+        <form onSubmit={handleSubmit(login)} className="space-y-5">
+          <InputField
+            type="email"
+            placeholder="Email Address"
+            register={register}
+            name="email"
+            error={errors.email}
+          />
+
+          <InputField
+            type="password"
+            placeholder="Password"
+            register={register}
+            name="password"
+            error={errors.password}
+          />
+
+          <div className="flex justify-end">
+            <Link
+              to="/forgot-password"
+              className="text-sm text-blue-400 hover:text-blue-300"
+            >
+              Forgot Password?
+            </Link>
+          </div>
+
+          <button
+            disabled={loading}
+            className="w-full rounded-2xl bg-blue-600 py-4 text-lg font-semibold hover:bg-blue-700 transition disabled:opacity-60"
+          >
+            {loading ? "Logging In..." : "Login"}
+          </button>
+        </form>
+
+        <div className="text-center mt-8 text-slate-400">
+          Don't have an account?
+          <Link to="/register" className="ml-2 font-semibold text-blue-400">
+            Register
+          </Link>
+        </div>
+      </motion.div>
+    </div>
+  );
 }
 
 export default Login;
