@@ -1,16 +1,16 @@
 import DashboardLayout from "../layouts/DashboardLayout";
+import UploadCard from "../components/UploadCard";
+import ChatBox from "../components/ChatBox";
 
 function Chat() {
     return (
         <DashboardLayout>
-            <div className="bg-gray-900 rounded-xl h-[700px] flex flex-col">
-                <div className="flex-1 p-6 overflow-auto">
+            <div className="grid grid-cols-12 gap-6">
+                <div className="col-span-4">
+                    <UploadCard />
                 </div>
-                <div className="border-t border-gray-700 p-5">
-                    <input
-                        className="w-full bg-gray-800 rounded-lg p-4"
-                        placeholder="Ask anything..."
-                    />
+                <div className="col-span-8">
+                    <ChatBox />
                 </div>
             </div>
         </DashboardLayout>
