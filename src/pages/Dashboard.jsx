@@ -1,31 +1,30 @@
 import DashboardLayout from "../layouts/DashboardLayout";
 import StatCard from "../components/StatCard";
+import QuickActions from "../components/QuickActions";
+import RecentDocuments from "../components/RecentDocuments";
 
 function Dashboard() {
     return (
         <DashboardLayout>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid lg:grid-cols-3 gap-6">
                 <StatCard
-                    title="Uploaded Documents"
-                    value="12"
+                    title="Documents"
+                    value="15"
                 />
                 <StatCard
-                    title="Questions Asked"
-                    value="185"
+                    title="Questions"
+                    value="247"
                 />
+
                 <StatCard
-                    title="AI Responses"
-                    value="185"
+                    title="Responses"
+                    value="247"
                 />
             </div>
 
-            <div className="bg-gray-900 rounded-xl p-8 mt-8">
-                <h2 className="text-2xl font-bold">
-                    Welcome 👋
-                </h2>
-                <p className="mt-3 text-gray-400">
-                    Upload your PDF and start asking questions.
-                </p>
+            <div className="grid lg:grid-cols-2 gap-6 mt-8">
+                <QuickActions />
+                <RecentDocuments />
             </div>
         </DashboardLayout>
     )

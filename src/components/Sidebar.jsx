@@ -35,10 +35,14 @@ function Sidebar() {
 
     return (
         <div className="w-64 h-screen bg-gray-950 border-r border-gray-800 flex flex-col">
-            <div className="text-2xl font-bold p-6 text-blue-500">
-                AI Assistant
+            <div className="p-6">
+                <h1 className="text-3xl font-bold text-blue-500">
+                    🤖 AI Assistant
+                </h1>
+                <p className="text-gray-500 text-sm">
+                    Powered by Spring Boot
+                </p>
             </div>
-
             <div className="flex-1">
                 {
                     menu.map((item) => (

@@ -1,8 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { FaRobot } from "react-icons/fa";
 import InputField from "../components/InputField";
+import toast from "react-hot-toast";
+import { loginUser } from "../api/authService";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../redux/authSlice";
 
 function Login() {
     const {
@@ -11,9 +15,21 @@ function Login() {
         formState: { errors }
     } = useForm();
 
-    const login = (data) => {
-        console.log(data);
-    }
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const login = async (data) => {
+        try {
+            const response = await loginUser(data);
+            dispatch(loginSuccess(response));
+            toast.success("Login Successful");
+            navigate("/dashboard");
+        } catch (error) {
+            toast.error(
+                error.response?.data?.message || "Login Failed"
+            );
+        }
+    };
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-950 via-blue-950 to-black flex justify-center items-center">
